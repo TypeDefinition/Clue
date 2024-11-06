@@ -56,10 +56,16 @@ public class Room : MonoBehaviour {
     }
 
     private void OnEnable() {
+        GameEventSystem.GetInstance().SubscribeToEvent<DialogNode>(nameof(GameEventName.StartDialog), OnStartDialog);
+        GameEventSystem.GetInstance().SubscribeToEvent(nameof(GameEventName.EndDialog), OnEndDialog);
+
         videoPlayer.loopPointReached += OnVideoFinish;
     }
 
     private void OnDisable() {
+        GameEventSystem.GetInstance().UnsubscribeFromEvent<DialogNode>(nameof(GameEventName.StartDialog), OnStartDialog);
+        GameEventSystem.GetInstance().UnsubscribeFromEvent(nameof(GameEventName.EndDialog), OnEndDialog);
+
         videoPlayer.loopPointReached -= OnVideoFinish;
     }
 
@@ -113,6 +119,13 @@ public class Room : MonoBehaviour {
         videoPlayer.clip = dialogNode.clip;
         videoPlayer.isLooping = false;
         videoPlayer.Play();
+
+        // Are there any clues? If yes, update our notes.
+        if (dialogNode.clueRoom != string.Empty &&
+            dialogNode.clueItem != string.Empty &&
+            dialogNode.clueDesc != string.Empty) {
+            GameEventSystem.GetInstance().TriggerEvent<string, string, string>(nameof(GameEventName.FoundClue), dialogNode.clueRoom, dialogNode.clueItem, dialogNode.clueDesc);
+        }
     }
 
     private void OnUpdateListen() {
@@ -177,12 +190,12 @@ public class Room : MonoBehaviour {
     }
 
     // Event Callbacks
-    public void OnStartDialog(DialogNode node) {
+    private void OnStartDialog(DialogNode node) {
         this.dialogNode = node;
         fsm.ChangeState((int)RoomState.Listen);
     }
 
-    public void OnEndDialog() {
+    private void OnEndDialog() {
         fsm.ChangeState((int)RoomState.PointAndClick);
     }
 }

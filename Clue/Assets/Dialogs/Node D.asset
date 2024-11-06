@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 32900000, guid: 83c2ccde79da39f40880dbe0ef708469, type: 3}
   options: []
+  clueRoom: Hall
+  clueItem: Spanner
+  clueDesc: There is blood on it.

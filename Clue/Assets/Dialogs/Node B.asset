@@ -16,3 +16,6 @@ MonoBehaviour:
   options:
   - text: B to A
     node: {fileID: 11400000, guid: 749e919838038b24aab510df94bbe005, type: 2}
+  clueRoom: Hall
+  clueItem: Mr Green
+  clueDesc: There is oil on his gloves.
