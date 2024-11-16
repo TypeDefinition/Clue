@@ -10,7 +10,7 @@ public enum RoomState {
     EnterRoom = 0,
     PointAndClick,
     Listen,
-    Question,
+    Interrogate,
     LeaveRoom,
 
     Num,
@@ -25,9 +25,9 @@ public class Room : MonoBehaviour {
 
     [Header("UI")]
     [SerializeField] private GameObject pointAndClickUI;
-    [SerializeField] private GameObject dialogUI;
+    [SerializeField] private GameObject interrogateUI;
 
-    private DialogNode dialogNode;
+    private Dialogue dialogue;
     private FiniteStateMachine fsm = new FiniteStateMachine();
 
     private void Awake() {
@@ -46,9 +46,9 @@ public class Room : MonoBehaviour {
         fsm.SetStateUpdate((int)RoomState.Listen, OnUpdateListen);
         fsm.SetStateExit((int)RoomState.Listen, OnExitListen);
 
-        fsm.SetStateEntry((int)RoomState.Question, OnEnterQuestion);
-        fsm.SetStateUpdate((int)RoomState.Question, OnUpdateQuestion);
-        fsm.SetStateExit((int)RoomState.Question, OnExitQuestion);
+        fsm.SetStateEntry((int)RoomState.Interrogate, OnEnterInterrogate);
+        fsm.SetStateUpdate((int)RoomState.Interrogate, OnUpdateInterrogate);
+        fsm.SetStateExit((int)RoomState.Interrogate, OnExitInterrogate);
 
         fsm.SetStateEntry((int)RoomState.LeaveRoom, OnEnterLeaveRoom);
         fsm.SetStateUpdate((int)RoomState.LeaveRoom, OnUpdateLeaveRoom);
@@ -56,22 +56,22 @@ public class Room : MonoBehaviour {
     }
 
     private void OnEnable() {
-        GameEventSystem.GetInstance().SubscribeToEvent<DialogNode>(nameof(GameEventName.StartDialog), OnStartDialog);
-        GameEventSystem.GetInstance().SubscribeToEvent(nameof(GameEventName.EndDialog), OnEndDialog);
+        GameEventSystem.GetInstance().SubscribeToEvent<Dialogue>(nameof(GameEventName.StartDialogue), OnStartDialogue);
+        GameEventSystem.GetInstance().SubscribeToEvent(nameof(GameEventName.EndDialogue), OnEndDialogue);
 
         videoPlayer.loopPointReached += OnVideoFinish;
     }
 
     private void OnDisable() {
-        GameEventSystem.GetInstance().UnsubscribeFromEvent<DialogNode>(nameof(GameEventName.StartDialog), OnStartDialog);
-        GameEventSystem.GetInstance().UnsubscribeFromEvent(nameof(GameEventName.EndDialog), OnEndDialog);
+        GameEventSystem.GetInstance().UnsubscribeFromEvent<Dialogue>(nameof(GameEventName.StartDialogue), OnStartDialogue);
+        GameEventSystem.GetInstance().UnsubscribeFromEvent(nameof(GameEventName.EndDialogue), OnEndDialogue);
 
         videoPlayer.loopPointReached -= OnVideoFinish;
     }
 
     private void Start() {
         pointAndClickUI.SetActive(false);
-        dialogUI.SetActive(false);
+        interrogateUI.SetActive(false);
 
         // Update Finite State Machine
         fsm.ChangeState((int)RoomState.EnterRoom);
@@ -116,48 +116,48 @@ public class Room : MonoBehaviour {
     // Dialog State
     private void OnEnterListen() {
         // Play video.
-        videoPlayer.clip = dialogNode.clip;
+        videoPlayer.clip = dialogue.GetVideoClip();
         videoPlayer.isLooping = false;
         videoPlayer.Play();
 
         // Are there any clues? If yes, update our notes.
-        if (dialogNode.clueRoom != string.Empty &&
-            dialogNode.clueItem != string.Empty &&
-            dialogNode.clueDesc != string.Empty) {
-            GameEventSystem.GetInstance().TriggerEvent<string, string, string>(nameof(GameEventName.FoundClue), dialogNode.clueRoom, dialogNode.clueItem, dialogNode.clueDesc);
+        if (0 != dialogue.GetClues().Length) {
+            GameEventSystem.GetInstance().TriggerEvent<Clue[]>(nameof(GameEventName.FoundClues), dialogue.GetClues());
         }
     }
 
     private void OnUpdateListen() {
+        Debug.Log("uwuiwuwu");
     }
 
     private void OnExitListen() {
 
     }
 
-    // Options State
-    private void OnEnterQuestion() {
-        dialogUI.SetActive(true);
+    // Interrogate State
+    private void OnEnterInterrogate() {
+        interrogateUI.SetActive(true);
 
         // Display dialog options.
-        for (int i = 0; i < dialogNode.options.Length; ++i) {
-            string text = dialogNode.options[i].text;
-            DialogNode node = dialogNode.options[i].node;
-            dialogUI.GetComponent<QuestionList>().AddButton(text,
+        DialogueOption[] options = dialogue.GetOptions();
+        for (int i = 0; i < options.Length; ++i) {
+            string text = options[i].text;
+            Dialogue nextDialogue = options[i].nextDialogue;
+            interrogateUI.GetComponent<QuestionList>().AddButton(text,
                 () => {
-                    this.dialogNode = node;
+                    this.dialogue = nextDialogue;
                     fsm.ChangeState((int)RoomState.Listen);
                 });
         }
     }
 
-    private void OnUpdateQuestion() {
+    private void OnUpdateInterrogate() {
 
     }
 
-    private void OnExitQuestion() {
-        dialogUI.GetComponent<QuestionList>().ClearButtons();
-        dialogUI.SetActive(false);
+    private void OnExitInterrogate() {
+        interrogateUI.GetComponent<QuestionList>().ClearButtons();
+        interrogateUI.SetActive(false);
     }
 
     // Leave Room State
@@ -181,7 +181,7 @@ public class Room : MonoBehaviour {
                 fsm.ChangeState((int)RoomState.PointAndClick);
                 break;
             case RoomState.Listen:
-                fsm.ChangeState((int)RoomState.Question);
+                fsm.ChangeState((int)RoomState.Interrogate);
                 break;
             case RoomState.LeaveRoom:
                 SceneManager.LoadScene("MapScene");
@@ -190,12 +190,12 @@ public class Room : MonoBehaviour {
     }
 
     // Event Callbacks
-    private void OnStartDialog(DialogNode node) {
-        this.dialogNode = node;
+    private void OnStartDialogue(Dialogue dialogue) {
+        this.dialogue = dialogue;
         fsm.ChangeState((int)RoomState.Listen);
     }
 
-    private void OnEndDialog() {
+    private void OnEndDialogue() {
         fsm.ChangeState((int)RoomState.PointAndClick);
     }
 }

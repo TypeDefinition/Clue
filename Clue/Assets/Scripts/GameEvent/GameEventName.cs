@@ -1,10 +1,10 @@
 public enum GameEventName {
     // Clues
-    FoundClue,
+    FoundClues,
 
     // Dialog
-    StartDialog,
-    EndDialog,
+    StartDialogue,
+    EndDialogue,
 
     Num,
 }

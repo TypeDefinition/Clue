@@ -124,8 +124,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5596954053626946260}
-        m_TargetAssemblyTypeName: EndDialogButton, Assembly-CSharp
-        m_MethodName: OnEndDialog
+        m_TargetAssemblyTypeName: EndDialogueButton, Assembly-CSharp
+        m_MethodName: OnEndDialogue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 2339964318185439181}
   - component: {fileID: 1341739347591598195}
   m_Layer: 5
-  m_Name: Question UI
+  m_Name: Interrogate UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

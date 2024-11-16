@@ -5,17 +5,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Assertions;
 
-[System.Serializable]
-public class GenericUnityEvent1<T> : UnityEvent<T> { }
-
-[System.Serializable]
-public class GenericUnityEvent2<T1, T2> : UnityEvent<T1, T2> { }
-
-[System.Serializable]
-public class GenericUnityEvent3<T1, T2, T3> : UnityEvent<T1, T2, T3> { }
-
-[System.Serializable]
-public class GenericUnityEvent4<T1, T2, T3, T4> : UnityEvent<T1, T2, T3, T4> { }
+[System.Serializable] public class GameEvent : UnityEvent { }
+[System.Serializable] public class GameEvent<T> : UnityEvent<T> { }
+[System.Serializable] public class GameEvent<T1, T2> : UnityEvent<T1, T2> { }
+[System.Serializable] public class GameEvent<T1, T2, T3> : UnityEvent<T1, T2, T3> { }
+[System.Serializable] public class GameEvent<T1, T2, T3, T4> : UnityEvent<T1, T2, T3, T4> { }
 
 public class GameEventSystem {
     // Singleton Instance
@@ -25,7 +19,7 @@ public class GameEventSystem {
     private Dictionary<string, UnityEventBase> events = new Dictionary<string, UnityEventBase>();
 
     // Debug Variable(s)
-    bool printDebug = false;
+    public bool enableDebug = false;
 
     // Constructor(s)
     private GameEventSystem() { }
@@ -39,249 +33,246 @@ public class GameEventSystem {
         return instance;
     }
 
-    private void PrintDebug(string _str) {
-        if (printDebug) {
-            Debug.Log(_str);
-        }
+    private void DebugLog(string str) {
+        if (enableDebug) { Debug.Log(str); }
     }
 
-    public bool HasEvent(string _eventName) {
-        return events.ContainsKey(_eventName);
-    }
-
-    // Cast the event manually.
-    public UnityEventBase GetEvent(string _eventName) {
+    private UnityEventBase GetEvent(string eventName) {
         UnityEventBase result = null;
-        if (events.TryGetValue(_eventName, out result)) {
+        if (events.TryGetValue(eventName, out result)) {
             return result;
         }
 
         return null;
     }
 
-    public void AddEvent(string _eventName) {
-        Assert.IsFalse(events.ContainsKey(_eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
+    private void AddEvent(string eventName) {
+        Assert.IsFalse(events.ContainsKey(eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
 
         UnityEvent unityEvent = new UnityEvent();
-        events.Add(_eventName, unityEvent);
+        events.Add(eventName, unityEvent);
     }
 
-    public void AddEvent<T>(string _eventName) {
-        Assert.IsFalse(events.ContainsKey(_eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
+    private void AddEvent<T>(string eventName) {
+        Assert.IsFalse(events.ContainsKey(eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
 
-        GenericUnityEvent1<T> unityEvent = new GenericUnityEvent1<T>();
-        events.Add(_eventName, unityEvent);
+        UnityEvent<T> unityEvent = new UnityEvent<T>();
+        events.Add(eventName, unityEvent);
     }
 
-    public void AddEvent<T1, T2>(string _eventName) {
-        Assert.IsFalse(events.ContainsKey(_eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
+    private void AddEvent<T1, T2>(string eventName) {
+        Assert.IsFalse(events.ContainsKey(eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
 
-        GenericUnityEvent2<T1, T2> unityEvent = new GenericUnityEvent2<T1, T2>();
-        events.Add(_eventName, unityEvent);
+        UnityEvent<T1, T2> unityEvent = new UnityEvent<T1, T2>();
+        events.Add(eventName, unityEvent);
     }
 
-    public void AddEvent<T1, T2, T3>(string _eventName) {
-        Assert.IsFalse(events.ContainsKey(_eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
+    private void AddEvent<T1, T2, T3>(string eventName) {
+        Assert.IsFalse(events.ContainsKey(eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
 
-        GenericUnityEvent3<T1, T2, T3> unityEvent = new GenericUnityEvent3<T1, T2, T3>();
-        events.Add(_eventName, unityEvent);
+        UnityEvent<T1, T2, T3> unityEvent = new UnityEvent<T1, T2, T3>();
+        events.Add(eventName, unityEvent);
     }
 
-    public void AddEvent<T1, T2, T3, T4>(string _eventName) {
-        Assert.IsFalse(events.ContainsKey(_eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
+    private void AddEvent<T1, T2, T3, T4>(string eventName) {
+        Assert.IsFalse(events.ContainsKey(eventName), MethodBase.GetCurrentMethod().Name + " - An event with this name already exist!");
 
-        GenericUnityEvent4<T1, T2, T3, T4> unityEvent = new GenericUnityEvent4<T1, T2, T3, T4>();
-        events.Add(_eventName, unityEvent);
+        UnityEvent<T1, T2, T3, T4> unityEvent = new UnityEvent<T1, T2, T3, T4>();
+        events.Add(eventName, unityEvent);
     }
 
-    public void SubscribeToEvent(string _eventName, UnityAction _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+    // **************** Public Interface ****************
+    public bool HasEvent(string eventName) {
+        return events.ContainsKey(eventName);
+    }
+
+    public void SubscribeToEvent(string eventName, UnityAction unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
         UnityEvent unityEvent = (UnityEvent)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong SubscribeToEvent function called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.AddListener(_unityAction);
+        unityEvent.AddListener(unityAction);
     }
 
-    public void SubscribeToEvent<T>(string _eventName, UnityAction<T> _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+    public void SubscribeToEvent<T>(string eventName, UnityAction<T> unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent<T>(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent<T>(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
-        GenericUnityEvent1<T> unityEvent = (GenericUnityEvent1<T>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong SubscribeToEvent function called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T> unityEvent = (UnityEvent<T>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.AddListener(_unityAction);
+        unityEvent.AddListener(unityAction);
     }
 
-    public void SubscribeToEvent<T1, T2>(string _eventName, UnityAction<T1, T2> _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+    public void SubscribeToEvent<T1, T2>(string eventName, UnityAction<T1, T2> unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent<T1, T2>(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent<T1, T2>(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
-        GenericUnityEvent2<T1, T2> unityEvent = (GenericUnityEvent2<T1, T2>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong SubscribeToEvent function called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2> unityEvent = (UnityEvent<T1, T2>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.AddListener(_unityAction);
+        unityEvent.AddListener(unityAction);
     }
 
-    public void SubscribeToEvent<T1, T2, T3>(string _eventName, UnityAction<T1, T2, T3> _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+    public void SubscribeToEvent<T1, T2, T3>(string eventName, UnityAction<T1, T2, T3> unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent<T1, T2, T3>(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent<T1, T2, T3>(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
-        GenericUnityEvent3<T1, T2, T3> unityEvent = (GenericUnityEvent3<T1, T2, T3>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong SubscribeToEvent function called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2, T3> unityEvent = (UnityEvent<T1, T2, T3>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.AddListener(_unityAction);
+        unityEvent.AddListener(unityAction);
     }
 
-    public void SubscribeToEvent<T1, T2, T3, T4>(string _eventName, UnityAction<T1, T2, T3, T4> _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+    public void SubscribeToEvent<T1, T2, T3, T4>(string eventName, UnityAction<T1, T2, T3, T4> unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent<T1, T2, T3, T4>(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent<T1, T2, T3, T4>(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
-        GenericUnityEvent4<T1, T2, T3, T4> unityEvent = (GenericUnityEvent4<T1, T2, T3, T4>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong SubscribeToEvent function called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2, T3, T4> unityEvent = (UnityEvent<T1, T2, T3, T4>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.AddListener(_unityAction);
+        unityEvent.AddListener(unityAction);
     }
 
-    public void UnsubscribeFromEvent(string _eventName, UnityAction _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
-        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + _eventName + ") not found!");
+    public void UnsubscribeFromEvent(string eventName, UnityAction unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
+        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + eventName + ") not found!");
 
         UnityEvent unityEvent = (UnityEvent)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong UnsubscribeFromEvent function called!  Ensure that you call the UnsubscribeToEvent function corresponding to the AddEvent function you called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.RemoveListener(_unityAction);
+        unityEvent.RemoveListener(unityAction);
     }
 
-    public void UnsubscribeFromEvent<T>(string _eventName, UnityAction<T> _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
-        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + _eventName + ") not found!");
+    public void UnsubscribeFromEvent<T>(string eventName, UnityAction<T> unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
+        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + eventName + ") not found!");
 
-        GenericUnityEvent1<T> unityEvent = (GenericUnityEvent1<T>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong UnsubscribeFromEvent function called!  Ensure that you call the UnsubscribeToEvent function corresponding to the AddEvent function you called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T> unityEvent = (UnityEvent<T>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.RemoveListener(_unityAction);
+        unityEvent.RemoveListener(unityAction);
     }
 
-    public void UnsubscribeFromEvent<T1, T2>(string _eventName, UnityAction<T1, T2> _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
-        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + _eventName + ") not found!");
+    public void UnsubscribeFromEvent<T1, T2>(string eventName, UnityAction<T1, T2> unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
+        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + eventName + ") not found!");
 
-        GenericUnityEvent2<T1, T2> unityEvent = (GenericUnityEvent2<T1, T2>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong UnsubscribeFromEvent function called!  Ensure that you call the UnsubscribeToEvent function corresponding to the AddEvent function you called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2> unityEvent = (UnityEvent<T1, T2>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.RemoveListener(_unityAction);
+        unityEvent.RemoveListener(unityAction);
     }
 
-    public void UnsubscribeFromEvent<T1, T2, T3>(string _eventName, UnityAction<T1, T2, T3> _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
-        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + _eventName + ") not found!");
+    public void UnsubscribeFromEvent<T1, T2, T3>(string eventName, UnityAction<T1, T2, T3> unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
+        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + eventName + ") not found!");
 
-        GenericUnityEvent3<T1, T2, T3> unityEvent = (GenericUnityEvent3<T1, T2, T3>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong UnsubscribeFromEvent function called!  Ensure that you call the UnsubscribeToEvent function corresponding to the AddEvent function you called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2, T3> unityEvent = (UnityEvent<T1, T2, T3>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.RemoveListener(_unityAction);
+        unityEvent.RemoveListener(unityAction);
     }
 
-    public void UnsubscribeFromEvent<T1, T2, T3, T4>(string _eventName, UnityAction<T1, T2, T3, T4> _unityAction) {
-        UnityEventBase unityEventBase = GetEvent(_eventName);
-        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + _eventName + ") not found!");
+    public void UnsubscribeFromEvent<T1, T2, T3, T4>(string eventName, UnityAction<T1, T2, T3, T4> unityAction) {
+        UnityEventBase unityEventBase = GetEvent(eventName);
+        Assert.IsFalse(unityEventBase == null, MethodBase.GetCurrentMethod().Name + " - Event(" + eventName + ") not found!");
 
-        GenericUnityEvent4<T1, T2, T3, T4> unityEvent = (GenericUnityEvent4<T1, T2, T3, T4>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong UnsubscribeFromEvent function called!  Ensure that you call the UnsubscribeToEvent function corresponding to the AddEvent function you called! Ensure that you call the SubscribeToEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2, T3, T4> unityEvent = (UnityEvent<T1, T2, T3, T4>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.RemoveListener(_unityAction);
+        unityEvent.RemoveListener(unityAction);
     }
 
-    public void TriggerEvent(string _eventName) {
-        PrintDebug("Triggered Event: " + _eventName);
+    public void TriggerEvent(string eventName) {
+        DebugLog("Triggered Event: " + eventName);
 
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
         UnityEvent unityEvent = (UnityEvent)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong TriggerEvent function called! Ensure that you call the TriggerEvent function corresponding to the AddEvent function you called!");
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
         unityEvent.Invoke();
     }
 
-    public void TriggerEvent<T>(string _eventName, T _parameter) {
-        PrintDebug("Triggered Event: " + _eventName);
+    public void TriggerEvent<T>(string eventName, T parameter) {
+        DebugLog("Triggered Event: " + eventName);
 
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent<T>(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent<T>(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
-        GenericUnityEvent1<T> unityEvent = (GenericUnityEvent1<T>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong TriggerEvent function called! Ensure that you call the TriggerEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T> unityEvent = (UnityEvent<T>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.Invoke(_parameter);
+        unityEvent.Invoke(parameter);
     }
 
-    public void TriggerEvent<T1, T2>(string _eventName, T1 _parameter1, T2 _parameter2) {
-        PrintDebug("Triggered Event: " + _eventName);
+    public void TriggerEvent<T1, T2>(string eventName, T1 parameter1, T2 parameter2) {
+        DebugLog("Triggered Event: " + eventName);
 
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent<T1, T2>(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent<T1, T2>(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
-        GenericUnityEvent2<T1, T2> unityEvent = (GenericUnityEvent2<T1, T2>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong TriggerEvent function called! Ensure that you call the TriggerEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2> unityEvent = (UnityEvent<T1, T2>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.Invoke(_parameter1, _parameter2);
+        unityEvent.Invoke(parameter1, parameter2);
     }
 
-    public void TriggerEvent<T1, T2, T3>(string _eventName, T1 _parameter1, T2 _parameter2, T3 _parameter3) {
-        PrintDebug("Triggered Event: " + _eventName);
+    public void TriggerEvent<T1, T2, T3>(string eventName, T1 parameter1, T2 parameter2, T3 parameter3) {
+        DebugLog("Triggered Event: " + eventName);
 
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent<T1, T2, T3>(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent<T1, T2, T3>(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
-        GenericUnityEvent3<T1, T2, T3> unityEvent = (GenericUnityEvent3<T1, T2, T3>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong TriggerEvent function called! Ensure that you call the TriggerEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2, T3> unityEvent = (UnityEvent<T1, T2, T3>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.Invoke(_parameter1, _parameter2, _parameter3);
+        unityEvent.Invoke(parameter1, parameter2, parameter3);
     }
 
-    public void TriggerEvent<T1, T2, T3, T4>(string _eventName, T1 _parameter1, T2 _parameter2, T3 _parameter3, T4 _parameter4) {
-        PrintDebug("Triggered Event: " + _eventName);
+    public void TriggerEvent<T1, T2, T3, T4>(string eventName, T1 parameter1, T2 parameter2, T3 parameter3, T4 parameter4) {
+        DebugLog("Triggered Event: " + eventName);
 
-        UnityEventBase unityEventBase = GetEvent(_eventName);
+        UnityEventBase unityEventBase = GetEvent(eventName);
         if (unityEventBase == null) {
-            AddEvent<T1, T2, T3, T4>(_eventName);
-            unityEventBase = GetEvent(_eventName);
+            AddEvent<T1, T2, T3, T4>(eventName);
+            unityEventBase = GetEvent(eventName);
         }
 
-        GenericUnityEvent4<T1, T2, T3, T4> unityEvent = (GenericUnityEvent4<T1, T2, T3, T4>)unityEventBase;
-        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - Wrong TriggerEvent function called! Ensure that you call the TriggerEvent function corresponding to the AddEvent function you called!");
+        UnityEvent<T1, T2, T3, T4> unityEvent = (UnityEvent<T1, T2, T3, T4>)unityEventBase;
+        Assert.IsFalse(unityEvent == null, MethodBase.GetCurrentMethod().Name + " - The event " + eventName + " already exists with different arguments defined!");
 
-        unityEvent.Invoke(_parameter1, _parameter2, _parameter3, _parameter4);
+        unityEvent.Invoke(parameter1, parameter2, parameter3, parameter4);
     }
-
 }
