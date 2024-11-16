@@ -4,13 +4,15 @@ using System.Reflection;
 using UnityEngine;
 using TMPro;
 using System;
+using System.Linq;
 
 public class Notebook : MonoBehaviour {
     [Header("References")]
     [SerializeField] private GameObject background;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private NotebookData data;
 
-    private HashSet<Clue> clues = new HashSet<Clue>();
+    private HashSet<Clue> discoveredClues = new HashSet<Clue>();
 
     private void OnEnable() {
         GameEventSystem.GetInstance().SubscribeToEvent<Clue[]>(nameof(GameEventName.FoundClues), OnFoundClues);
@@ -18,6 +20,14 @@ public class Notebook : MonoBehaviour {
 
     private void OnDisabled() {
         GameEventSystem.GetInstance().UnsubscribeFromEvent<Clue[]>(nameof(GameEventName.FoundClues), OnFoundClues);
+    }
+
+    private void Start() {
+        // Read from persistent data.
+        for (int i = 0; i < data.discoveredClues.Length; ++i) {
+            discoveredClues.Add(data.discoveredClues[i]);
+        }
+        UpdateText();
     }
 
     private string ToString(RoomName room) {
@@ -42,18 +52,13 @@ public class Notebook : MonoBehaviour {
         }
     }
 
-    // GameEvent Callbacks
-    private void OnFoundClues(Clue[] newClues) {
-        for (int i = 0; i < newClues.Length; ++i) {
-            clues.Add(newClues[i]);
-        }
-
+    private void UpdateText() {
         // Organise clues by room and item.
         Dictionary<string, Dictionary<string, List<string>>> notes = new Dictionary<string, Dictionary<string, List<string>>>();
-        foreach (Clue c in clues) {
-            string room = ToString(c.room);
-            string item = ToString(c.item);
-            string desc = c.description;
+        foreach (Clue clue in discoveredClues) {
+            string room = ToString(clue.room);
+            string item = ToString(clue.item);
+            string desc = clue.description;
 
             if (!notes.ContainsKey(room)) {
                 notes.Add(room, new Dictionary<string, List<string>>());
@@ -85,6 +90,19 @@ public class Notebook : MonoBehaviour {
 
             text.text += "\n";
         }
+    }
+
+    // GameEvent Callbacks
+    private void OnFoundClues(Clue[] foundClues) {
+        // Add new clues.
+        for (int i = 0; i < foundClues.Length; ++i) {
+            discoveredClues.Add(foundClues[i]);
+        }
+
+        // Save discovered clues to persistent memory.
+        data.discoveredClues = discoveredClues.ToArray();
+
+        UpdateText();
     }
 
     public void ToggleVisibility() {

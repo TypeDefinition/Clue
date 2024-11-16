@@ -301,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   background: {fileID: 1927965966985281686}
   text: {fileID: 5793076003120939343}
+  data: {fileID: 11400000, guid: dd6e9fda7f6f4904a888397f59be7680, type: 2}
 --- !u!1 &4462080821192794567
 GameObject:
   m_ObjectHideFlags: 0

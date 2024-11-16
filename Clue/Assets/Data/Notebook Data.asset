@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
-  m_Name: DialogueA
+  m_Script: {fileID: 11500000, guid: d65d03d72443d6b4ca5b941374634b38, type: 3}
+  m_Name: Notebook Data
   m_EditorClassIdentifier: 
-  videoClip: {fileID: 32900000, guid: 5bb1957250bf00547a90c7faa77d6552, type: 3}
-  options: []
-  clues:
-  - room: 0
-    item: 0
-    description: It looks pristine.
+  discoveredClues: []

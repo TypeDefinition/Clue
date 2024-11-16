@@ -127,7 +127,6 @@ public class Room : MonoBehaviour {
     }
 
     private void OnUpdateListen() {
-        Debug.Log("uwuiwuwu");
     }
 
     private void OnExitListen() {
