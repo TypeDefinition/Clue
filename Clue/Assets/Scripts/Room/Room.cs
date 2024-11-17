@@ -9,8 +9,10 @@ public enum RoomState {
 
     EnterRoom = 0,
     PointAndClick,
+    StartConversation,
     Listen,
     Interrogate,
+    EndConversation,
     LeaveRoom,
 
     Num,
@@ -27,46 +29,51 @@ public class Room : MonoBehaviour {
     [SerializeField] private GameObject pointAndClickUI;
     [SerializeField] private GameObject interrogateUI;
 
-    private Dialogue dialogue;
     private FiniteStateMachine fsm = new FiniteStateMachine();
 
+    private Conversation conversation;
+    private Dialogue dialogue;
+
     private void Awake() {
-        // Initialise Finite State Machine
+        // Initialise number of states.
         fsm.SetNumStates((int)RoomState.Num);
 
+        // Enter Room
         fsm.SetStateEntry((int)RoomState.EnterRoom, OnEnterEnterRoom);
-        fsm.SetStateUpdate((int)RoomState.EnterRoom, OnUpdateEnterRoom);
-        fsm.SetStateExit((int)RoomState.EnterRoom, OnExitEnterRoom);
 
+        // Point & Click
         fsm.SetStateEntry((int)RoomState.PointAndClick, OnEnterPointAndClick);
-        fsm.SetStateUpdate((int)RoomState.PointAndClick, OnUpdatePointAndClick);
         fsm.SetStateExit((int)RoomState.PointAndClick, OnExitPointAndClick);
 
-        fsm.SetStateEntry((int)RoomState.Listen, OnEnterListen);
-        fsm.SetStateUpdate((int)RoomState.Listen, OnUpdateListen);
-        fsm.SetStateExit((int)RoomState.Listen, OnExitListen);
+        // Start Conversation
+        fsm.SetStateEntry((int)RoomState.StartConversation, OnEnterStartConversation);
 
+        // Listen
+        fsm.SetStateEntry((int)RoomState.Listen, OnEnterListen);
+
+        // Interrogate
         fsm.SetStateEntry((int)RoomState.Interrogate, OnEnterInterrogate);
-        fsm.SetStateUpdate((int)RoomState.Interrogate, OnUpdateInterrogate);
         fsm.SetStateExit((int)RoomState.Interrogate, OnExitInterrogate);
 
+        // End Conversation
+        fsm.SetStateEntry((int)RoomState.EndConversation, OnEnterEndConversation);
+
+        // Leave Room
         fsm.SetStateEntry((int)RoomState.LeaveRoom, OnEnterLeaveRoom);
-        fsm.SetStateUpdate((int)RoomState.LeaveRoom, OnUpdateLeaveRoom);
-        fsm.SetStateExit((int)RoomState.LeaveRoom, OnExitLeaveRoom);
     }
 
     private void OnEnable() {
-        GameEventSystem.GetInstance().SubscribeToEvent<Dialogue>(nameof(GameEventName.StartDialogue), OnStartDialogue);
-        GameEventSystem.GetInstance().SubscribeToEvent(nameof(GameEventName.EndDialogue), OnEndDialogue);
-
         videoPlayer.loopPointReached += OnVideoFinish;
+
+        GameEventSystem.GetInstance().SubscribeToEvent<Conversation>(nameof(GameEventName.StartConversation), OnStartConversation);
+        GameEventSystem.GetInstance().SubscribeToEvent(nameof(GameEventName.EndConversation), OnEndConversation);
     }
 
     private void OnDisable() {
-        GameEventSystem.GetInstance().UnsubscribeFromEvent<Dialogue>(nameof(GameEventName.StartDialogue), OnStartDialogue);
-        GameEventSystem.GetInstance().UnsubscribeFromEvent(nameof(GameEventName.EndDialogue), OnEndDialogue);
-
         videoPlayer.loopPointReached -= OnVideoFinish;
+
+        GameEventSystem.GetInstance().UnsubscribeFromEvent<Conversation>(nameof(GameEventName.StartConversation), OnStartConversation);
+        GameEventSystem.GetInstance().UnsubscribeFromEvent(nameof(GameEventName.EndConversation), OnEndConversation);
     }
 
     private void Start() {
@@ -88,12 +95,6 @@ public class Room : MonoBehaviour {
         videoPlayer.Play();
     }
 
-    private void OnUpdateEnterRoom() {
-    }
-
-    private void OnExitEnterRoom() {
-    }
-
     // Point & Click State
     private void OnEnterPointAndClick() {
         videoPlayer.isLooping = true;
@@ -103,14 +104,26 @@ public class Room : MonoBehaviour {
         pointAndClickUI.SetActive(true);
     }
 
-    private void OnUpdatePointAndClick() {
-
-    }
-
     private void OnExitPointAndClick() {
         videoPlayer.Stop();
 
         pointAndClickUI.SetActive(false);
+    }
+
+    // Start Conversation State
+    private void OnEnterStartConversation() {
+        // Play video.
+        videoPlayer.clip = conversation.GetStartVideoClip();
+        videoPlayer.isLooping = false;
+        videoPlayer.Play();
+    }
+
+    // End Conversation State
+    private void OnEnterEndConversation() {
+        // Play video.
+        videoPlayer.clip = conversation.GetEndVideoClip();
+        videoPlayer.isLooping = false;
+        videoPlayer.Play();
     }
 
     // Dialog State
@@ -124,13 +137,6 @@ public class Room : MonoBehaviour {
         if (0 != dialogue.GetClues().Length) {
             GameEventSystem.GetInstance().TriggerEvent<Clue[]>(nameof(GameEventName.FoundClues), dialogue.GetClues());
         }
-    }
-
-    private void OnUpdateListen() {
-    }
-
-    private void OnExitListen() {
-
     }
 
     // Interrogate State
@@ -150,10 +156,6 @@ public class Room : MonoBehaviour {
         }
     }
 
-    private void OnUpdateInterrogate() {
-
-    }
-
     private void OnExitInterrogate() {
         interrogateUI.GetComponent<QuestionList>().ClearButtons();
         interrogateUI.SetActive(false);
@@ -166,12 +168,6 @@ public class Room : MonoBehaviour {
         videoPlayer.Play();
     }
 
-    private void OnUpdateLeaveRoom() {
-    }
-
-    private void OnExitLeaveRoom() {
-    }
-
     // Video Player Callback
     private void OnVideoFinish(UnityEngine.Video.VideoPlayer vp) {
         RoomState currentState = (RoomState)fsm.GetCurrentState();
@@ -179,22 +175,31 @@ public class Room : MonoBehaviour {
             case RoomState.EnterRoom:
                 fsm.ChangeState((int)RoomState.PointAndClick);
                 break;
+            case RoomState.StartConversation:
+                fsm.ChangeState((int)RoomState.Listen);
+                break;
             case RoomState.Listen:
                 fsm.ChangeState((int)RoomState.Interrogate);
                 break;
+            case RoomState.EndConversation:
+                fsm.ChangeState((int)RoomState.PointAndClick);
+                break;
             case RoomState.LeaveRoom:
                 SceneManager.LoadScene("MapScene");
+                break;
+            default:
                 break;
         }
     }
 
     // Event Callbacks
-    private void OnStartDialogue(Dialogue dialogue) {
-        this.dialogue = dialogue;
-        fsm.ChangeState((int)RoomState.Listen);
+    private void OnStartConversation(Conversation conversation) {
+        this.conversation = conversation;
+        this.dialogue = conversation.GetInitialDialogue();
+        fsm.ChangeState((int)RoomState.StartConversation);
     }
 
-    private void OnEndDialogue() {
-        fsm.ChangeState((int)RoomState.PointAndClick);
+    private void OnEndConversation() {
+        fsm.ChangeState((int)RoomState.EndConversation);
     }
 }
