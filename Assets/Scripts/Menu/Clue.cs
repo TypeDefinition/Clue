@@ -6,18 +6,25 @@ public enum RoomName {
     Garden,
     Study,
     Lounge,
+
+    Num,
 }
 
 public enum ItemName {
+    None = -1,
+
     // Weapons
     MeasuringTape,
     Book,
     Scissors,
+    BillardBall,
 
     // Suspects
-    DocGreen,
+    DrGreen,
     ProfPlum,
     MrScarlet,
+
+    Num,
 }
 
 [System.Serializable]

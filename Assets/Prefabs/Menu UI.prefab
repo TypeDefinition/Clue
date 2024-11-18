@@ -158,7 +158,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7868157911502916539}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: SelectSuspectDrGreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &197510727620844419
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +371,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: No notes yet...
+  m_text: No discovered clues yet...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bb736ecafaccabc4bbdfffa716f61603, type: 2}
   m_sharedMaterial: {fileID: 5456836623207758379, guid: bb736ecafaccabc4bbdfffa716f61603,
@@ -616,6 +628,7 @@ GameObject:
   - component: {fileID: 6031820641511333527}
   - component: {fileID: 1059751093237139277}
   - component: {fileID: 6868083391530203759}
+  - component: {fileID: 8025757071982380768}
   m_Layer: 5
   m_Name: Select Weapon Button
   m_TagString: Untagged
@@ -680,6 +693,62 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8025757071982380768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994083011699648405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.8666667, b: 0.2, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 6868083391530203759}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: GoToWeaponSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1749847584328993696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,7 +1335,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3221321048745547481}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: SelectSuspectMrScarlet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2408546377004299758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,10 +1579,22 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 6689466334632484466}
+  m_TargetGraphic: {fileID: 3178838581226949053}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: SelectWeaponBillardBall
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3293696388465526107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,7 +1714,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1653137125789599163}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: SelectSuspectProfPlum
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3337409490216934187
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,6 +2224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3536992416045224904}
+  - component: {fileID: 1365267979322348045}
   m_Layer: 5
   m_Name: Solver UI
   m_TagString: Untagged
@@ -2139,7 +2245,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2100064961925202827}
-  - {fileID: 4041635176512391573}
   - {fileID: 1927483818271207327}
   - {fileID: 3899313836678762392}
   - {fileID: 537342426755475991}
@@ -2150,6 +2255,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1365267979322348045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4576266079329246051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b3b97069781ee4ea57d6eb47c5ff34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background: {fileID: 9061994881352838477}
+  overview: {fileID: 6086860707670052821}
+  suspectSelection: {fileID: 813362686727094733}
+  weaponSelection: {fileID: 2416704767841630041}
+  selectSuspectButton: {fileID: 5004434195881866919}
+  selectWeaponButton: {fileID: 994083011699648405}
+  itemSprites:
+  - {fileID: 21300000, guid: eab81307341edd54ab110f84c866332e, type: 3}
+  - {fileID: 21300000, guid: 3c4bec093086e08429b71296568d1e6c, type: 3}
+  - {fileID: 21300000, guid: 336a008b8be6de749b70089572d4096b, type: 3}
+  - {fileID: 21300000, guid: 21358764630f47e4b9fc4d02a56a78ee, type: 3}
+  - {fileID: 21300000, guid: e4872ddded9485b4e9a87d621682bd87, type: 3}
+  - {fileID: 21300000, guid: 388091ed50ccb024a80b171bce2e9255, type: 3}
+  - {fileID: 21300000, guid: adb4deeb0a2e2474ab468c0f7394960b, type: 3}
 --- !u!1 &4774194010648184141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2269,42 +2400,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6689466334632484466}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!1 &4782956463078507747
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4041635176512391573}
-  m_Layer: 5
-  m_Name: Suspect Selection UI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &4041635176512391573
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4782956463078507747}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3536992416045224904}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 32, y: 32}
-  m_Pivot: {x: 0.5, y: 0.5}
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: SelectWeaponScissors
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5004434195881866919
 GameObject:
   m_ObjectHideFlags: 0
@@ -2316,6 +2424,7 @@ GameObject:
   - component: {fileID: 436647863681689286}
   - component: {fileID: 8723894911131545528}
   - component: {fileID: 3450106106581267989}
+  - component: {fileID: 7155826822416030093}
   m_Layer: 5
   m_Name: Select Suspect Button
   m_TagString: Untagged
@@ -2380,6 +2489,62 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7155826822416030093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004434195881866919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.8666667, b: 0.2, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 3450106106581267989}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: GoToSuspectSelection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5206554178070160132
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,7 +2664,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5737471606567385213}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: SelectWeaponBook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5781581518725493695
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,7 +2989,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 770994624284166575}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: ToggleVisibility
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8792834232676796291
 GameObject:
   m_ObjectHideFlags: 0
@@ -2932,7 +3121,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7617039946219234279}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: SelectWeaponMeasuringTape
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9061994881352838477
 GameObject:
   m_ObjectHideFlags: 0

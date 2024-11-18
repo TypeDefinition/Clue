@@ -39,27 +39,27 @@ public class Room : MonoBehaviour {
         fsm.SetNumStates((int)RoomState.Num);
 
         // Enter Room
-        fsm.SetStateEntry((int)RoomState.EnterRoom, OnEnterEnterRoom);
+        fsm.SetStateEntry((int)RoomState.EnterRoom, EnterEnterRoom);
 
         // Point & Click
-        fsm.SetStateEntry((int)RoomState.PointAndClick, OnEnterPointAndClick);
-        fsm.SetStateExit((int)RoomState.PointAndClick, OnExitPointAndClick);
+        fsm.SetStateEntry((int)RoomState.PointAndClick, EnterPointAndClick);
+        fsm.SetStateExit((int)RoomState.PointAndClick, ExitPointAndClick);
 
         // Start Conversation
-        fsm.SetStateEntry((int)RoomState.StartConversation, OnEnterStartConversation);
+        fsm.SetStateEntry((int)RoomState.StartConversation, EnterStartConversation);
 
         // Listen
-        fsm.SetStateEntry((int)RoomState.Listen, OnEnterListen);
+        fsm.SetStateEntry((int)RoomState.Listen, EnterListen);
 
         // Interrogate
-        fsm.SetStateEntry((int)RoomState.Interrogate, OnEnterInterrogate);
-        fsm.SetStateExit((int)RoomState.Interrogate, OnExitInterrogate);
+        fsm.SetStateEntry((int)RoomState.Interrogate, EnterInterrogate);
+        fsm.SetStateExit((int)RoomState.Interrogate, ExitInterrogate);
 
         // End Conversation
-        fsm.SetStateEntry((int)RoomState.EndConversation, OnEnterEndConversation);
+        fsm.SetStateEntry((int)RoomState.EndConversation, EnterEndConversation);
 
         // Leave Room
-        fsm.SetStateEntry((int)RoomState.LeaveRoom, OnEnterLeaveRoom);
+        fsm.SetStateEntry((int)RoomState.LeaveRoom, EnterLeaveRoom);
     }
 
     private void OnEnable() {
@@ -89,14 +89,14 @@ public class Room : MonoBehaviour {
     }
 
     // Enter Room State
-    private void OnEnterEnterRoom() {
+    private void EnterEnterRoom() {
         // Play video.
         videoPlayer.clip = enterRoomClip;
         videoPlayer.Play();
     }
 
     // Point & Click State
-    private void OnEnterPointAndClick() {
+    private void EnterPointAndClick() {
         videoPlayer.isLooping = true;
         videoPlayer.clip = pointAndClickClip;
         videoPlayer.Play();
@@ -104,14 +104,14 @@ public class Room : MonoBehaviour {
         pointAndClickUI.SetActive(true);
     }
 
-    private void OnExitPointAndClick() {
+    private void ExitPointAndClick() {
         videoPlayer.Stop();
 
         pointAndClickUI.SetActive(false);
     }
 
     // Start Conversation State
-    private void OnEnterStartConversation() {
+    private void EnterStartConversation() {
         // Play video.
         videoPlayer.clip = conversation.GetStartVideoClip();
         videoPlayer.isLooping = false;
@@ -119,7 +119,7 @@ public class Room : MonoBehaviour {
     }
 
     // End Conversation State
-    private void OnEnterEndConversation() {
+    private void EnterEndConversation() {
         // Play video.
         videoPlayer.clip = conversation.GetEndVideoClip();
         videoPlayer.isLooping = false;
@@ -127,7 +127,7 @@ public class Room : MonoBehaviour {
     }
 
     // Dialog State
-    private void OnEnterListen() {
+    private void EnterListen() {
         // Play video.
         videoPlayer.clip = dialogue.GetVideoClip();
         videoPlayer.isLooping = false;
@@ -140,7 +140,7 @@ public class Room : MonoBehaviour {
     }
 
     // Interrogate State
-    private void OnEnterInterrogate() {
+    private void EnterInterrogate() {
         interrogateUI.SetActive(true);
 
         // Display dialog options.
@@ -156,13 +156,13 @@ public class Room : MonoBehaviour {
         }
     }
 
-    private void OnExitInterrogate() {
+    private void ExitInterrogate() {
         interrogateUI.GetComponent<QuestionList>().ClearButtons();
         interrogateUI.SetActive(false);
     }
 
     // Leave Room State
-    private void OnEnterLeaveRoom() {
+    private void EnterLeaveRoom() {
         // Play video.
         videoPlayer.clip = leaveRoomClip;
         videoPlayer.Play();

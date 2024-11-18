@@ -12,6 +12,7 @@ public class Notebook : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private NotebookData data;
 
+    private bool visible = false;
     private HashSet<Clue> discoveredClues = new HashSet<Clue>();
 
     private void OnEnable() {
@@ -45,7 +46,7 @@ public class Notebook : MonoBehaviour {
             case ItemName.MeasuringTape: return "Measuring Tape";
             case ItemName.Book: return "Book";
             case ItemName.Scissors: return "Scissors";
-            case ItemName.DocGreen: return "Dr. Green";
+            case ItemName.DrGreen: return "Dr. Green";
             case ItemName.ProfPlum: return "Professor Plum";
             case ItemName.MrScarlet: return "Mr. Scarlet";
             default: throw new Exception(MethodBase.GetCurrentMethod().Name + " - Undefined item!");
@@ -68,6 +69,8 @@ public class Notebook : MonoBehaviour {
             }
             notes[room][item].Add(desc);
         }
+
+        if (notes.Count == 0) { return; }
 
         // Write to notebook text.
         text.text = string.Empty;
@@ -106,12 +109,8 @@ public class Notebook : MonoBehaviour {
     }
 
     public void ToggleVisibility() {
-        if (background.activeSelf) {
-            background.SetActive(false);
-            text.gameObject.SetActive(false);
-        } else {
-            background.SetActive(true);
-            text.gameObject.SetActive(true);
-        }
+        visible = !visible;
+        background.SetActive(visible);
+        text.gameObject.SetActive(visible);
     }
 }
