@@ -36,20 +36,26 @@ public class Notebook : MonoBehaviour {
             case RoomName.Garden: return "Garden";
             case RoomName.Study: return "Study";
             case RoomName.Lounge: return "Lounge";
-            default:
-                throw new Exception(MethodBase.GetCurrentMethod().Name + " - Undefined room!");
+            case RoomName.Ballroom: return "Ballroom";
+
+            default: throw new Exception(MethodBase.GetCurrentMethod().Name + " - Undefined room!");
         }
     }
 
     private string ToString(ItemName item) {
         switch (item) {
+            // Weapons
             case ItemName.MeasuringTape: return "Measuring Tape";
             case ItemName.Book: return "Book";
             case ItemName.Scissors: return "Scissors";
+            case ItemName.BillardBall: return "Billard Ball";
+
+            // Suspects
             case ItemName.DrGreen: return "Dr. Green";
-            case ItemName.ProfPlum: return "Professor Plum";
+            case ItemName.ProfPlum: return "Prof. Plum";
             case ItemName.MrScarlet: return "Mr. Scarlet";
-            default: throw new Exception(MethodBase.GetCurrentMethod().Name + " - Undefined item!");
+
+            default: throw new Exception(MethodBase.GetCurrentMethod().Name + " - Undefined weapon or suspect!");
         }
     }
 
@@ -70,9 +76,8 @@ public class Notebook : MonoBehaviour {
             notes[room][item].Add(desc);
         }
 
-        if (notes.Count == 0) { return; }
-
         // Write to notebook text.
+        if (notes.Count == 0) { return; }
         text.text = string.Empty;
         foreach (var i in notes) {
             string room = i.Key;

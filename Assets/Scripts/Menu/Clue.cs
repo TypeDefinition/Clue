@@ -4,8 +4,9 @@ using UnityEngine;
 
 public enum RoomName {
     Garden,
-    Study,
     Lounge,
+    Ballroom,
+    Study,
 
     Num,
 }
