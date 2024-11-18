@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum SolverState {
@@ -15,6 +16,7 @@ public enum SolverState {
 
 public class Solver : MonoBehaviour {
     [Header("References")]
+    [SerializeField] private Answer answer;
     [SerializeField] private GameObject background;
     [SerializeField] private GameObject overview;
     [SerializeField] private GameObject suspectSelection;
@@ -24,8 +26,6 @@ public class Solver : MonoBehaviour {
     [SerializeField] private Sprite[] itemSprites = new Sprite[(int)ItemName.Num];
 
     private FiniteStateMachine fsm = new FiniteStateMachine();
-    private ItemName selectedSuspect = ItemName.None;
-    private ItemName selectedWeapon = ItemName.None;
 
     private void Awake() {
         fsm.SetNumStates((int)SolverState.Num);
@@ -64,18 +64,27 @@ public class Solver : MonoBehaviour {
         }
     }
 
+    public void SubmitAnswer() {
+        if (answer.murderer == ItemName.None || answer.murderWeapon == ItemName.None) {
+            // TODO: Play a sound here.
+            return;
+        }
+
+        SceneManager.LoadScene("OutroScene");
+    }
+
     public void GoToSuspectSelection() { fsm.ChangeState((int)SolverState.SuspectSelection); }
 
     public void GoToWeaponSelection() { fsm.ChangeState((int)SolverState.WeaponSelection); }
 
     public void SelectSuspect(ItemName suspect) {
-        selectedSuspect = suspect;
+        answer.murderer = suspect;
         selectSuspectButton.GetComponent<Image>().sprite = itemSprites[(int)suspect];
         fsm.ChangeState((int)SolverState.Overview);
     }
 
     public void SelectWeapon(ItemName weapon) {
-        selectedWeapon = weapon;
+        answer.murderWeapon = weapon;
         selectWeaponButton.GetComponent<Image>().sprite = itemSprites[(int)weapon];
         fsm.ChangeState((int)SolverState.Overview);
     }

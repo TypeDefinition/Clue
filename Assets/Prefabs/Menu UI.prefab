@@ -683,7 +683,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1d7acb7b9f0f63b45bb63502c1a53eb6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fa5a132ed2d5de94bb59752d7e9be46d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -972,7 +972,7 @@ GameObject:
   - component: {fileID: 1623565716929141393}
   - component: {fileID: 3653281572007581379}
   m_Layer: 5
-  m_Name: Confirm Button
+  m_Name: Submit Answer Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1080,7 +1080,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1623565716929141393}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1365267979322348045}
+        m_TargetAssemblyTypeName: Solver, Assembly-CSharp
+        m_MethodName: SubmitAnswer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2372107884965489686
 GameObject:
   m_ObjectHideFlags: 0
@@ -2267,6 +2279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b3b97069781ee4ea57d6eb47c5ff34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  answer: {fileID: 11400000, guid: c720af3a828d2534893a3240dfa320bd, type: 2}
   background: {fileID: 9061994881352838477}
   overview: {fileID: 6086860707670052821}
   suspectSelection: {fileID: 813362686727094733}
@@ -2274,13 +2287,13 @@ MonoBehaviour:
   selectSuspectButton: {fileID: 5004434195881866919}
   selectWeaponButton: {fileID: 994083011699648405}
   itemSprites:
+  - {fileID: 21300000, guid: e4872ddded9485b4e9a87d621682bd87, type: 3}
+  - {fileID: 21300000, guid: 388091ed50ccb024a80b171bce2e9255, type: 3}
+  - {fileID: 21300000, guid: adb4deeb0a2e2474ab468c0f7394960b, type: 3}
   - {fileID: 21300000, guid: eab81307341edd54ab110f84c866332e, type: 3}
   - {fileID: 21300000, guid: 3c4bec093086e08429b71296568d1e6c, type: 3}
   - {fileID: 21300000, guid: 336a008b8be6de749b70089572d4096b, type: 3}
   - {fileID: 21300000, guid: 21358764630f47e4b9fc4d02a56a78ee, type: 3}
-  - {fileID: 21300000, guid: e4872ddded9485b4e9a87d621682bd87, type: 3}
-  - {fileID: 21300000, guid: 388091ed50ccb024a80b171bce2e9255, type: 3}
-  - {fileID: 21300000, guid: adb4deeb0a2e2474ab468c0f7394960b, type: 3}
 --- !u!1 &4774194010648184141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2479,7 +2492,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1d7acb7b9f0f63b45bb63502c1a53eb6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 48095aa8521f0d24eb459da0bff182aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
