@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
+  m_Name: Plum6
+  m_EditorClassIdentifier: 
+  videoClip: {fileID: 32900000, guid: 1a57b48ded054a04790170240a79cef4, type: 3}
+  options:
+  - text: What does Mr. Black have to do with this?
+    nextDialogue: {fileID: 11400000, guid: 3f2d14b322033f2479d131b607cedddc, type: 2}
+  clues: []

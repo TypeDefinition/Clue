@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 1925900019}
-  introClip: {fileID: 32900000, guid: 3002c662cd089894f88efd92ce60418d, type: 3}
+  introClip: {fileID: 32900000, guid: 3ec8c6c065df28745aca7e1de42aff57, type: 3}
   nextScene: MapScene
 --- !u!1 &1031221354
 GameObject:

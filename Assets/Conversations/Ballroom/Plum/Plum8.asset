@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
+  m_Name: Plum8
+  m_EditorClassIdentifier: 
+  videoClip: {fileID: 32900000, guid: 741faa954cce83d45bee10341f9352e3, type: 3}
+  options:
+  - text: Where were you when the lights went out?
+    nextDialogue: {fileID: 11400000, guid: fadfb56cb0b6dc24695f4dc7e1d18c3f, type: 2}
+  - text: What's that book you have there?
+    nextDialogue: {fileID: 11400000, guid: ed6913ff40c5f4d49ba596e518617845, type: 2}
+  clues: []

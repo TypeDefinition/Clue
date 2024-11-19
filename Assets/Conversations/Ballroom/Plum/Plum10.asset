@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
+  m_Name: Plum10
+  m_EditorClassIdentifier: 
+  videoClip: {fileID: 32900000, guid: 4dad0e8eb05deae4ba90ff64c5ef8523, type: 3}
+  options:
+  - text: Were you with anyone at the time?
+    nextDialogue: {fileID: 11400000, guid: 5434af036f8d73b4a8be8bc732038377, type: 2}
+  clues: []

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   murderer: 1
   murderWeapon: 4
-  deathClip: {fileID: 32900000, guid: 5bb1957250bf00547a90c7faa77d6552, type: 3}
+  deathClip: {fileID: 32900000, guid: 9872eeeb913275144ba444650542c280, type: 3}
   arrestClips:
   - {fileID: 32900000, guid: 96919accae72b254e91495082b99df27, type: 3}
   - {fileID: 32900000, guid: 96919accae72b254e91495082b99df27, type: 3}

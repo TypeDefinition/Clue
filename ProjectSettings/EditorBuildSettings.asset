@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GardenScene.unity
     guid: 774ef4785bb54c940a09b8558895d405
   - enabled: 1
+    path: Assets/Scenes/BallroomScene.unity
+    guid: 2e2605cded47f6b4eb2c946f36aa0a80
+  - enabled: 1
     path: Assets/Scenes/OutroScene.unity
     guid: ce80c19ef551ed24caf28f6e6064905b
   m_configObjects: {}

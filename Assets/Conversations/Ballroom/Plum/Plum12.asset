@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
+  m_Name: Plum12
+  m_EditorClassIdentifier: 
+  videoClip: {fileID: 32900000, guid: 495bfc41ec82dcd4e83db41dfd679c18, type: 3}
+  options:
+  - text: It sounds like you had some issues with Mr. Black.
+    nextDialogue: {fileID: 11400000, guid: 7dd1ed91e37bdfd41ad8c002ee2fba31, type: 2}
+  - text: That book of yours seems awfully heavy.
+    nextDialogue: {fileID: 11400000, guid: 71e9ebf1b7a0a314d886e8cdf1b2c5c5, type: 2}
+  - text: What is your opinion of this incident?
+    nextDialogue: {fileID: 11400000, guid: bbf3c57207db9664ba4f7f42b7eb3883, type: 2}
+  clues: []
