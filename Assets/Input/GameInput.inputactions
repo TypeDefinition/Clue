@@ -1,0 +1,34 @@
+{
+    "name": "GameInput",
+    "maps": [
+        {
+            "name": "Game",
+            "id": "4dfc56da-3825-4c67-812c-3edfa4df186d",
+            "actions": [
+                {
+                    "name": "SkipVideo",
+                    "type": "Button",
+                    "id": "d7f56df2-87c0-4cd6-824a-e6142204bc6b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b839a7be-18fe-4e61-a0c9-618f1c1ec5f5",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkipVideo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

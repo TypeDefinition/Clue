@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d65d03d72443d6b4ca5b941374634b38, type: 3}
-  m_Name: Notebook Data
+  m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
+  m_Name: GreenApproach
   m_EditorClassIdentifier: 
-  discoveredClues: []
+  videoClip: {fileID: 32900000, guid: dc3e7177678c8cc4798a0ba5611ba98c, type: 3}
+  options:
+  - text: Placeholder
+    nextDialogue: {fileID: 11400000}
+  clues: []

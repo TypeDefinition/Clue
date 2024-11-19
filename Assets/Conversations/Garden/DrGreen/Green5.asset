@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
-  m_Name: DialogueA
+  m_Name: Green5
   m_EditorClassIdentifier: 
-  videoClip: {fileID: 32900000, guid: 5bb1957250bf00547a90c7faa77d6552, type: 3}
+  videoClip: {fileID: 32900000, guid: 25c5c32963b521b4189eeb8edda40e44, type: 3}
   options:
-  - text: Placeholder
+  - text: What is that on your hands?
+    nextDialogue: {fileID: 11400000, guid: d6b98063c9b5e284f93f2bbb3c6eec37, type: 2}
+  - text: Not sure when you're launching your machine?
     nextDialogue: {fileID: 11400000}
-  clues:
-  - room: 0
-    item: 0
-    description: It looks pristine.
+  clues: []

@@ -10,7 +10,7 @@ public class Notebook : MonoBehaviour {
     [Header("References")]
     [SerializeField] private GameObject background;
     [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private NotebookData data;
+    [SerializeField] private Notes data;
 
     private bool visible = false;
     private HashSet<Clue> discoveredClues = new HashSet<Clue>();

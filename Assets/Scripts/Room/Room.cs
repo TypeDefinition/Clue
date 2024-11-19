@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public enum RoomState {
@@ -13,6 +14,7 @@ public enum RoomState {
     Listen,
     Interrogate,
     EndConversation,
+    Investigate,
     LeaveRoom,
 
     Num,
@@ -30,11 +32,14 @@ public class Room : MonoBehaviour {
     [SerializeField] private GameObject interrogateUI;
 
     private FiniteStateMachine fsm = new FiniteStateMachine();
-
+    private GameInput gameInput;
     private Conversation conversation;
     private Dialogue dialogue;
+    private Investigation investigation;
 
     private void Awake() {
+        gameInput = new GameInput();
+
         // Initialise number of states.
         fsm.SetNumStates((int)RoomState.Num);
 
@@ -58,6 +63,9 @@ public class Room : MonoBehaviour {
         // End Conversation
         fsm.SetStateEntry((int)RoomState.EndConversation, EnterEndConversation);
 
+        // Investigate
+        fsm.SetStateEntry((int)RoomState.Investigate, EnterInvestigate);
+
         // Leave Room
         fsm.SetStateEntry((int)RoomState.LeaveRoom, EnterLeaveRoom);
     }
@@ -67,6 +75,11 @@ public class Room : MonoBehaviour {
 
         GameEventSystem.GetInstance().SubscribeToEvent<Conversation>(nameof(GameEventName.StartConversation), OnStartConversation);
         GameEventSystem.GetInstance().SubscribeToEvent(nameof(GameEventName.EndConversation), OnEndConversation);
+        GameEventSystem.GetInstance().SubscribeToEvent<Investigation>(nameof(GameEventName.StartInvestigation), OnStartInvestigation);
+
+        // Input
+        gameInput.Enable();
+        gameInput.Game.SkipVideo.performed += OnSkipVideo;
     }
 
     private void OnDisable() {
@@ -74,6 +87,11 @@ public class Room : MonoBehaviour {
 
         GameEventSystem.GetInstance().UnsubscribeFromEvent<Conversation>(nameof(GameEventName.StartConversation), OnStartConversation);
         GameEventSystem.GetInstance().UnsubscribeFromEvent(nameof(GameEventName.EndConversation), OnEndConversation);
+        GameEventSystem.GetInstance().UnsubscribeFromEvent<Investigation>(nameof(GameEventName.StartInvestigation), OnStartInvestigation);
+
+        // Input
+        gameInput.Disable();
+        gameInput.Game.SkipVideo.performed -= OnSkipVideo;
     }
 
     private void Start() {
@@ -88,8 +106,17 @@ public class Room : MonoBehaviour {
         fsm.Update();
     }
 
+    private void LateUpdate() {
+        fsm.LateUpdate();
+    }
+
     // Enter Room State
     private void EnterEnterRoom() {
+        if (enterRoomClip == null) {
+            OnVideoFinish(videoPlayer);
+            return;
+        }
+
         // Play video.
         videoPlayer.clip = enterRoomClip;
         videoPlayer.Play();
@@ -97,9 +124,11 @@ public class Room : MonoBehaviour {
 
     // Point & Click State
     private void EnterPointAndClick() {
-        videoPlayer.isLooping = true;
-        videoPlayer.clip = pointAndClickClip;
-        videoPlayer.Play();
+        if (pointAndClickClip != null) {
+            videoPlayer.isLooping = true;
+            videoPlayer.clip = pointAndClickClip;
+            videoPlayer.Play();
+        }
 
         pointAndClickUI.SetActive(true);
     }
@@ -112,6 +141,12 @@ public class Room : MonoBehaviour {
 
     // Start Conversation State
     private void EnterStartConversation() {
+        // Skip video if there is none.
+        if (conversation.GetStartVideoClip() == null) {
+            OnVideoFinish(videoPlayer);
+            return;
+        }
+
         // Play video.
         videoPlayer.clip = conversation.GetStartVideoClip();
         videoPlayer.isLooping = false;
@@ -120,6 +155,12 @@ public class Room : MonoBehaviour {
 
     // End Conversation State
     private void EnterEndConversation() {
+        // Skip video if there is none.
+        if (conversation.GetEndVideoClip() == null) {
+            OnVideoFinish(videoPlayer);
+            return;
+        }
+
         // Play video.
         videoPlayer.clip = conversation.GetEndVideoClip();
         videoPlayer.isLooping = false;
@@ -128,15 +169,21 @@ public class Room : MonoBehaviour {
 
     // Dialog State
     private void EnterListen() {
-        // Play video.
-        videoPlayer.clip = dialogue.GetVideoClip();
-        videoPlayer.isLooping = false;
-        videoPlayer.Play();
-
         // Are there any clues? If yes, update our notes.
         if (0 != dialogue.GetClues().Length) {
             GameEventSystem.GetInstance().TriggerEvent<Clue[]>(nameof(GameEventName.FoundClues), dialogue.GetClues());
         }
+
+        // Skip video if there is none.
+        if (dialogue.GetVideoClip() == null) {
+            OnVideoFinish(videoPlayer);
+            return;
+        }
+
+        // Play video.
+        videoPlayer.clip = dialogue.GetVideoClip();
+        videoPlayer.isLooping = false;
+        videoPlayer.Play();
     }
 
     // Interrogate State
@@ -161,8 +208,32 @@ public class Room : MonoBehaviour {
         interrogateUI.SetActive(false);
     }
 
+    // Investigate State
+    private void EnterInvestigate() {
+        if (0 != investigation.GetClues().Length) {
+            GameEventSystem.GetInstance().TriggerEvent<Clue[]>(nameof(GameEventName.FoundClues), investigation.GetClues());
+        }
+
+        // Skip the video if there is none.
+        if (investigation.GetVideoClip() == null) {
+            OnVideoFinish(videoPlayer);
+            return;
+        }
+
+        // Play video.
+        videoPlayer.clip = investigation.GetVideoClip();
+        videoPlayer.isLooping = false;
+        videoPlayer.Play();
+    }
+
     // Leave Room State
     private void EnterLeaveRoom() {
+        // Skip video if there is none.
+        if (leaveRoomClip == null) {
+            OnVideoFinish(videoPlayer);
+            return;
+        }
+
         // Play video.
         videoPlayer.clip = leaveRoomClip;
         videoPlayer.Play();
@@ -184,6 +255,9 @@ public class Room : MonoBehaviour {
             case RoomState.EndConversation:
                 fsm.ChangeState((int)RoomState.PointAndClick);
                 break;
+            case RoomState.Investigate:
+                fsm.ChangeState((int)RoomState.PointAndClick);
+                break;
             case RoomState.LeaveRoom:
                 SceneManager.LoadScene("MapScene");
                 break;
@@ -201,5 +275,15 @@ public class Room : MonoBehaviour {
 
     private void OnEndConversation() {
         fsm.ChangeState((int)RoomState.EndConversation);
+    }
+
+    private void OnStartInvestigation(Investigation investigation) {
+        this.investigation = investigation;
+        fsm.ChangeState((int)RoomState.Investigate);
+    }
+
+    // Input Callbacks
+    private void OnSkipVideo(InputAction.CallbackContext context) {
+        OnVideoFinish(videoPlayer);
     }
 }
