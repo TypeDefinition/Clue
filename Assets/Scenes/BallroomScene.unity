@@ -1055,7 +1055,7 @@ MonoBehaviour:
         m_MethodName: StartInvestigation
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 9ecf6634d224c124cbb30bd8df7fe5a9,
+          m_ObjectArgument: {fileID: 11400000, guid: 9198c0ee5758e7848bdf0d1fe63079da,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: Investigation, Assembly-CSharp
           m_IntArgument: 0
@@ -1296,7 +1296,7 @@ GameObject:
   - component: {fileID: 7415890263806395079}
   - component: {fileID: 1534379617883235329}
   m_Layer: 5
-  m_Name: ProfPlum
+  m_Name: MrScarlet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1317,7 +1317,7 @@ GameObject:
   - component: {fileID: 921132827957215677}
   - component: {fileID: 1693322475}
   m_Layer: 5
-  m_Name: Book
+  m_Name: Measuring Tape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

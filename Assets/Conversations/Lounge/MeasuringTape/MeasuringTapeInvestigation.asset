@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747d7397e76e199408f7cd912e5019c8, type: 3}
   m_Name: MeasuringTapeInvestigation
   m_EditorClassIdentifier: 
-  videoClip: {fileID: 0}
-  clues: []
+  videoClip: {fileID: 32900000, guid: 3bcd3149aeacf6b41a6dce1b23a5fd1c, type: 3}
+  clues:
+  - room: 1
+    item: 3
+    description: Made of strong materials, won't rip when tugged on.
+  - room: 1
+    item: 3
+    description: Could be used to strangulate someone.

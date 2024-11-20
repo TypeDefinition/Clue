@@ -44,6 +44,14 @@ public class Solver : MonoBehaviour {
     }
 
     private void Start() {
+        // Read from persistent data.
+        if (answer.murderer != ItemName.None) {
+            selectSuspectButton.GetComponent<Image>().sprite = itemSprites[(int)answer.murderer];
+        }
+        if (answer.murderWeapon != ItemName.None) {
+            selectWeaponButton.GetComponent<Image>().sprite = itemSprites[(int)answer.murderWeapon];
+        }
+
         fsm.ChangeState((int)SolverState.None);
     }
 

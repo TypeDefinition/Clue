@@ -726,8 +726,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 1925900019}
-  enterRoomClip: {fileID: 32900000, guid: 586b46fb8c4c21149bfecc2bd18e3fbb, type: 3}
-  pointAndClickClip: {fileID: 32900000, guid: 3e3c2255874e60745942ad0cd42736c7, type: 3}
+  enterRoomClip: {fileID: 32900000, guid: 8dd05284a85a8844d964a7015a579a6c, type: 3}
+  pointAndClickClip: {fileID: 32900000, guid: 09e436c9adf485348a09a2d22604f126, type: 3}
   leaveRoomClip: {fileID: 0}
   pointAndClickUI: {fileID: 675536516}
   interrogateUI: {fileID: 1746326456}
@@ -1112,7 +1112,7 @@ MonoBehaviour:
         m_MethodName: StartConversation
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: ae6fd3e6ce0374041add7de8647d71fd,
+          m_ObjectArgument: {fileID: 11400000, guid: 4976d622dd619fd4481e92674674a1e0,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: Conversation, Assembly-CSharp
           m_IntArgument: 0
@@ -1317,7 +1317,7 @@ GameObject:
   - component: {fileID: 921132827957215677}
   - component: {fileID: 1693322475}
   m_Layer: 5
-  m_Name: Measuring Tape
+  m_Name: MeasuringTape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1339,7 +1339,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -350, y: 64}
+  m_AnchoredPosition: {x: 500, y: 50}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7412789351115571758
@@ -1378,7 +1378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 650, y: -80}
+  m_AnchoredPosition: {x: -120, y: -330}
   m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &9019943164241003066

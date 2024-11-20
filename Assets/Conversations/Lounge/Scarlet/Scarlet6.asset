@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
+  m_Name: Scarlet6
+  m_EditorClassIdentifier: 
+  videoClip: {fileID: 32900000, guid: fbb13598d3ffdc34490f64fd61ad6b29, type: 3}
+  options:
+  - text: What was your opinion of Mr. Black?
+    nextDialogue: {fileID: 11400000, guid: e4b576ab1bdc6c84c9e70f66101d4074, type: 2}
+  - text: Where were you when Mr. Black was murdered?
+    nextDialogue: {fileID: 11400000, guid: 0a198fccf31a7434db234d66b9591f25, type: 2}
+  - text: Can you tell me more about your work?
+    nextDialogue: {fileID: 11400000, guid: f7f3d56fb7d22e04bbd9d77b3e7f55db, type: 2}
+  clues: []

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec9021de6d60244db05eb9e82303506, type: 3}
+  m_Name: Scarlet1
+  m_EditorClassIdentifier: 
+  videoClip: {fileID: 32900000, guid: 58c93bcd72bafc6479e975a838217b0d, type: 3}
+  options:
+  - text: Who invited you, if not Mr. Black himself?
+    nextDialogue: {fileID: 11400000, guid: 0284cdc5cc871ca40ad41adfab22c9c0, type: 2}
+  - text: Who were you texting?
+    nextDialogue: {fileID: 11400000, guid: 5a9d7a88a02759b489015ac0f9f54692, type: 2}
+  clues: []
