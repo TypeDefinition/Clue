@@ -12,10 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65d03d72443d6b4ca5b941374634b38, type: 3}
   m_Name: Notes
   m_EditorClassIdentifier: 
-  discoveredClues:
-  - item: 0
-    description: "Mr. Black was questioning Green\u2019s business practices and intercepting
-      her investors."
-  - item: 0
-    description: "Mr. Black was questioning Green\u2019s business practices and intercepting
-      her investors."
+  discoveredClues: []

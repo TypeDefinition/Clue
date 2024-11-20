@@ -15,5 +15,5 @@ MonoBehaviour:
   videoClip: {fileID: 32900000, guid: 1a57b48ded054a04790170240a79cef4, type: 3}
   options:
   - text: What does Mr. Black have to do with this?
-    nextDialogue: {fileID: 11400000, guid: 3f2d14b322033f2479d131b607cedddc, type: 2}
+    nextDialogue: {fileID: 11400000, guid: 65499abb2382a274c974f77640b9dd77, type: 2}
   clues: []

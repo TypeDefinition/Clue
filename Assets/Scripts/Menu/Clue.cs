@@ -26,4 +26,14 @@ public enum ItemName {
 public class Clue {
     public ItemName item;
     public string description;
+
+    public override bool Equals(object obj) {
+        var other = obj as Clue;
+        if (other == null) return false;
+        return other.item == item && other.description == description;
+    }
+
+    public override int GetHashCode() {
+        return item.GetHashCode() + description.GetHashCode();
+    }
 }
