@@ -329,6 +329,7 @@ MonoBehaviour:
   conclusion: {fileID: 11400000, guid: 1dc5beedea3a0c94da6ecc487a0f45ba, type: 2}
   answer: {fileID: 11400000, guid: c720af3a828d2534893a3240dfa320bd, type: 2}
   videoPlayer: {fileID: 1925900019}
+  creditsClip: {fileID: 32900000, guid: 0ebfd291b67a4ad4d889904a966fd894, type: 3}
 --- !u!1 &1115935011
 GameObject:
   m_ObjectHideFlags: 0

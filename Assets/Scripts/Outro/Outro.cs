@@ -7,6 +7,7 @@ using UnityEngine.Video;
 public enum OutroState {
     Arrest,
     Death,
+    Credits,
 
     Num,
 }
@@ -16,6 +17,7 @@ public class Outro : MonoBehaviour {
     [SerializeField] private Conclusion conclusion;
     [SerializeField] private Answer answer;
     [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private VideoClip creditsClip;
 
     private FiniteStateMachine fsm = new FiniteStateMachine();
 
@@ -23,6 +25,7 @@ public class Outro : MonoBehaviour {
         fsm.SetNumStates((int)OutroState.Num);
         fsm.SetStateEntry((int)OutroState.Arrest, EnterArrest);
         fsm.SetStateEntry((int)OutroState.Death, EnterDeath);
+        fsm.SetStateEntry((int)OutroState.Credits, EnterCredits);
     }
 
     private void OnEnable() {
@@ -34,7 +37,11 @@ public class Outro : MonoBehaviour {
     }
 
     private void Start() {
-        fsm.ChangeState((int)OutroState.Arrest);
+        if (IsMurdererCorrect() && !IsMurderWeaponCorrect()) {
+            fsm.ChangeState((int)OutroState.Death);
+        } else {
+            fsm.ChangeState((int)OutroState.Arrest);
+        }
     }
 
     private void Update() {
@@ -45,8 +52,12 @@ public class Outro : MonoBehaviour {
         fsm.LateUpdate();
     }
 
-    private bool IsAnswerCorrect() {
-        return (answer.murderWeapon == conclusion.GetMurderWeapon()) && (answer.murderer == conclusion.GetMurderer());
+    private bool IsMurdererCorrect() {
+        return answer.murderer == conclusion.GetMurderer();
+    }
+
+    private bool IsMurderWeaponCorrect() {
+        return answer.murderWeapon == conclusion.GetMurderWeapon();
     }
 
     // ************ Arrest State ************
@@ -63,18 +74,28 @@ public class Outro : MonoBehaviour {
         videoPlayer.Play();
     }
 
+    // ************ Credits State ************
+    private void EnterCredits() {
+        videoPlayer.clip = creditsClip;
+        videoPlayer.isLooping = false;
+        videoPlayer.Play();
+    }
+
     // ************ Video Finish Callback ************
     private void OnVideoFinish(UnityEngine.Video.VideoPlayer vp) {
         OutroState currentState = (OutroState)fsm.GetCurrentState();
         switch (currentState) {
             case OutroState.Arrest:
-                if (IsAnswerCorrect()) {
-                    SceneManager.LoadScene("StartScene");
+                if (IsMurdererCorrect()) {
+                    fsm.ChangeState((int)OutroState.Credits);
                 } else {
                     fsm.ChangeState((int)OutroState.Death);
                 }
                 break;
             case OutroState.Death:
+                fsm.ChangeState((int)OutroState.Credits);
+                break;
+            case OutroState.Credits:
                 SceneManager.LoadScene("StartScene");
                 break;
             default:

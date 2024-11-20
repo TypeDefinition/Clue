@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/BallroomScene.unity
     guid: be9e639b12e000d44b64514824cd86b8
   - enabled: 1
+    path: Assets/Scenes/StudyScene.unity
+    guid: 48fb8d6cd187d0f4ca5813fdbd1307eb
+  - enabled: 1
     path: Assets/Scenes/OutroScene.unity
     guid: ce80c19ef551ed24caf28f6e6064905b
   m_configObjects: {}
