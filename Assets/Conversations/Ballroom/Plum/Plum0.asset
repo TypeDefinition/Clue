@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoClip: {fileID: 0}
   options:
-  - text: Have you worked with Dr. Green before?
+  - text: What was that all about?
     nextDialogue: {fileID: 11400000, guid: 84d94ec21589f594e83d63497534068e, type: 2}
   clues: []

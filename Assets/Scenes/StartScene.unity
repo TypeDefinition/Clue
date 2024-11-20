@@ -846,18 +846,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1861470909}
-        m_TargetAssemblyTypeName: SceneTransitor, Assembly-CSharp
-        m_MethodName: OnTransitScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: IntroScene
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1861470910}
         m_TargetAssemblyTypeName: DataReset, Assembly-CSharp
         m_MethodName: ResetData
@@ -868,6 +856,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1861470909}
+        m_TargetAssemblyTypeName: SceneTransitor, Assembly-CSharp
+        m_MethodName: OnTransitScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: IntroScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1861470909
