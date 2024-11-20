@@ -49,6 +49,7 @@ public class Notebook : MonoBehaviour {
             case ItemName.Book: return "Book";
             case ItemName.Scissors: return "Scissors";
             case ItemName.BillardBall: return "Billard Ball";
+            case ItemName.Corpse: return "Mr. Black's Corpse";
 
             // Suspects
             case ItemName.DrGreen: return "Dr. Green";

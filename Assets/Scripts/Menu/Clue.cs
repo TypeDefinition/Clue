@@ -26,6 +26,7 @@ public enum ItemName {
     Book,
     Scissors,
     BillardBall,
+    Corpse,
 
     Num,
 }
