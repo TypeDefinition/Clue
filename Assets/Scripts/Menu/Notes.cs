@@ -5,4 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Notes", menuName = "Notes")]
 public class Notes : ScriptableObject {
     public Clue[] discoveredClues = new Clue[0];
+
+    public void Reset() {
+        discoveredClues = new Clue[0];
+    }
 }

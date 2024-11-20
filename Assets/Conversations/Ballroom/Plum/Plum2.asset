@@ -16,4 +16,9 @@ MonoBehaviour:
   options:
   - text: Research funding?
     nextDialogue: {fileID: 11400000, guid: ce619a096a7bee14da4e3ca6a628a128, type: 2}
-  clues: []
+  clues:
+  - item: 1
+    description: Dr. Green is making progress in her research faster than should
+      be possible.
+  - item: 1
+    description: Plum is not receiving research funding at the same rate as Dr. Green.

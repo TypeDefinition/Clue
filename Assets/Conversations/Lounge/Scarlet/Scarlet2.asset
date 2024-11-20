@@ -16,4 +16,6 @@ MonoBehaviour:
   options:
   - text: Your concern is quite touching.
     nextDialogue: {fileID: 11400000, guid: edf2c65e32b1fbc42bd39f1f54fa2545, type: 2}
-  clues: []
+  clues:
+  - item: 2
+    description: "Scarlet came as Professor Plum\u2019s guest."

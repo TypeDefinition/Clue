@@ -16,4 +16,6 @@ MonoBehaviour:
   options:
   - text: I have some more questions for you.
     nextDialogue: {fileID: 11400000, guid: 7976edbe7fc23fa44bd88e6c77f38987, type: 2}
-  clues: []
+  clues:
+  - item: 0
+    description: Mr. Black liked to keep people indebted to him, Professor Plum included.

@@ -9,6 +9,7 @@ using System.Linq;
 public class Notebook : MonoBehaviour {
     [Header("References")]
     [SerializeField] private GameObject background;
+    [SerializeField] private GameObject scrollView;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Notes data;
 
@@ -31,7 +32,7 @@ public class Notebook : MonoBehaviour {
         UpdateText();
     }
 
-    private string ToString(RoomName room) {
+    /*private string ToString(RoomName room) {
         switch (room) {
             case RoomName.Garden: return "Garden";
             case RoomName.Study: return "Study";
@@ -40,7 +41,7 @@ public class Notebook : MonoBehaviour {
 
             default: throw new Exception(MethodBase.GetCurrentMethod().Name + " - Undefined room!");
         }
-    }
+    }*/
 
     private string ToString(ItemName item) {
         switch (item) {
@@ -62,42 +63,31 @@ public class Notebook : MonoBehaviour {
 
     private void UpdateText() {
         // Organise clues by room and item.
-        Dictionary<string, Dictionary<string, List<string>>> notes = new Dictionary<string, Dictionary<string, List<string>>>();
+        Dictionary<string, HashSet<string>> notes = new Dictionary<string, HashSet<string>>();
         foreach (Clue clue in discoveredClues) {
-            string room = ToString(clue.room);
             string item = ToString(clue.item);
             string desc = clue.description;
 
-            if (!notes.ContainsKey(room)) {
-                notes.Add(room, new Dictionary<string, List<string>>());
+            if (!notes.ContainsKey(item)) {
+                notes.Add(item, new HashSet<string>());
             }
-            if (!notes[room].ContainsKey(item)) {
-                notes[room].Add(item, new List<string>());
-            }
-            notes[room][item].Add(desc);
+            notes[item].Add(desc);
         }
 
         // Write to notebook text.
         if (notes.Count == 0) { return; }
         text.text = string.Empty;
-        foreach (var i in notes) {
-            string room = i.Key;
-            text.text += room;
+        foreach (var iter in notes) {
+            string item = iter.Key;
+            text.text += item + ":";
 
-            Dictionary<string, List<string>> items = i.Value;
-            foreach (var j in items) {
-                string item = j.Key;
-                text.text += "\n    • ";
-                text.text += item;
-
-                List<string> descriptions = j.Value;
-                foreach (string desc in descriptions) {
-                    text.text += "\n        ◦ ";
-                    text.text += desc;
-                }
+            HashSet<string> descriptions = iter.Value;
+            foreach (string desc in descriptions) {
+                text.text += "\n◦ ";
+                text.text += desc;
             }
 
-            text.text += "\n";
+            text.text += "\n\n";
         }
     }
 
@@ -117,6 +107,6 @@ public class Notebook : MonoBehaviour {
     public void ToggleVisibility() {
         visible = !visible;
         background.SetActive(visible);
-        text.gameObject.SetActive(visible);
+        scrollView.SetActive(visible);
     }
 }

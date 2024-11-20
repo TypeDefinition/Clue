@@ -14,9 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoClip: {fileID: 32900000, guid: 456e6dfcac871b64b919a75ad7c4ac5e, type: 3}
   clues:
-  - room: 2
-    item: 4
-    description: Heavy & large.
-  - room: 2
-    item: 4
-    description: Could cause blunt force trauma with enough force.
+  - item: 4
+    description: Heavy & large. Could cause blunt force trauma with enough force.

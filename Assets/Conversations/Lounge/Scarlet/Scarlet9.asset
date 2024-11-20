@@ -16,4 +16,7 @@ MonoBehaviour:
   options:
   - text: I have some more questions if you don't mind.
     nextDialogue: {fileID: 11400000, guid: d55ab045aa5e43d46b67f1fe01dcbe46, type: 2}
-  clues: []
+  clues:
+  - item: 2
+    description: Scarlet used to be a fashion designer and is now a social media
+      influencer.

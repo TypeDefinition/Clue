@@ -6,4 +6,9 @@ using UnityEngine;
 public class Answer : ScriptableObject {
     public ItemName murderer = ItemName.None;
     public ItemName murderWeapon = ItemName.None;
+
+    public void Reset() {
+        this.murderer = ItemName.None;
+        this.murderWeapon = ItemName.None;
+    }
 }

@@ -16,4 +16,6 @@ MonoBehaviour:
   options:
   - text: I have some more questions for you.
     nextDialogue: {fileID: 11400000, guid: 43a5d7227ed7906498ace1de252c15d9, type: 2}
-  clues: []
+  clues:
+  - item: 1
+    description: Plum heard Mr. Scarlet and Mr. Black fighting this evening.

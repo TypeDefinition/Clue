@@ -20,3 +20,6 @@ MonoBehaviour:
   - room: 3
     item: 7
     description: Seemingly died due to blunt force trauma to the head.
+  - room: 3
+    item: 7
+    description: Found a billard ball next to Mr. Black's body.

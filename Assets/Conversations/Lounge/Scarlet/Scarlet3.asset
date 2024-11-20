@@ -16,4 +16,6 @@ MonoBehaviour:
   options:
   - text: Just an old friend?
     nextDialogue: {fileID: 11400000, guid: 9d2fa583c0df0ce4cac233df5a5af1e6, type: 2}
-  clues: []
+  clues:
+  - item: 2
+    description: Scarlet is trying to contact a friend who might be in trouble.
