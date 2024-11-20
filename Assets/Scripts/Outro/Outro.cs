@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
@@ -8,6 +9,7 @@ public enum OutroState {
     Arrest,
     Death,
     Credits,
+    Finish,
 
     Num,
 }
@@ -19,21 +21,33 @@ public class Outro : MonoBehaviour {
     [SerializeField] private VideoPlayer videoPlayer;
     [SerializeField] private VideoClip creditsClip;
 
+    private GameInput gameInput;
     private FiniteStateMachine fsm = new FiniteStateMachine();
 
     private void Awake() {
+        gameInput = new GameInput();
+
         fsm.SetNumStates((int)OutroState.Num);
         fsm.SetStateEntry((int)OutroState.Arrest, EnterArrest);
         fsm.SetStateEntry((int)OutroState.Death, EnterDeath);
+        fsm.SetStateEntry((int)OutroState.Finish, EnterFinish);
         fsm.SetStateEntry((int)OutroState.Credits, EnterCredits);
     }
 
     private void OnEnable() {
         videoPlayer.loopPointReached += OnVideoFinish;
+
+        // Input
+        gameInput.Enable();
+        gameInput.Game.SkipVideo.performed += OnSkipVideo;
     }
 
     private void OnDisable() {
         videoPlayer.loopPointReached -= OnVideoFinish;
+
+        // Input
+        gameInput.Disable();
+        gameInput.Game.SkipVideo.performed -= OnSkipVideo;
     }
 
     private void Start() {
@@ -74,6 +88,19 @@ public class Outro : MonoBehaviour {
         videoPlayer.Play();
     }
 
+    // ************ Finish State ************
+    private void EnterFinish() {
+        if (IsMurdererCorrect() && IsMurderWeaponCorrect()) {
+            videoPlayer.clip = conclusion.GetSolveMurderClip();
+        } else if (IsMurdererCorrect() && !IsMurderWeaponCorrect()) {
+            videoPlayer.clip = conclusion.GetWrongWeaponClip();
+        } else {
+            videoPlayer.clip = conclusion.GetWrongSuspectClip();
+        }
+        videoPlayer.isLooping = false;
+        videoPlayer.Play();
+    }
+
     // ************ Credits State ************
     private void EnterCredits() {
         videoPlayer.clip = creditsClip;
@@ -87,12 +114,15 @@ public class Outro : MonoBehaviour {
         switch (currentState) {
             case OutroState.Arrest:
                 if (IsMurdererCorrect()) {
-                    fsm.ChangeState((int)OutroState.Credits);
+                    fsm.ChangeState((int)OutroState.Finish);
                 } else {
                     fsm.ChangeState((int)OutroState.Death);
                 }
                 break;
             case OutroState.Death:
+                fsm.ChangeState((int)OutroState.Finish);
+                break;
+            case OutroState.Finish:
                 fsm.ChangeState((int)OutroState.Credits);
                 break;
             case OutroState.Credits:
@@ -101,5 +131,10 @@ public class Outro : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    // ************ Input Callbacks ************
+    private void OnSkipVideo(InputAction.CallbackContext context) {
+        OnVideoFinish(videoPlayer);
     }
 }

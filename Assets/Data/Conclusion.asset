@@ -19,3 +19,6 @@ MonoBehaviour:
   - {fileID: 32900000, guid: 1f51bb338e553824e9a4b6b3fd9cba3a, type: 3}
   - {fileID: 32900000, guid: eb06f0b1deacdbb499df9c8d5ae9be04, type: 3}
   - {fileID: 32900000, guid: 3e0d4e6f98dc5474a95ef75ecf60c346, type: 3}
+  solveMurderClip: {fileID: 32900000, guid: eafb7a50072df4d408f9195cbd6f11b8, type: 3}
+  wrongSuspectClip: {fileID: 32900000, guid: b4a80568c54c3184096020976c8efc4a, type: 3}
+  wrongWeaponClip: {fileID: 32900000, guid: 72576172aa6ab82469f93ad720af4879, type: 3}
